@@ -101,47 +101,18 @@ public abstract class StackTest {
 
     assertOneOf (
       array(a,    b,     c,   d ),
-      // push(1) > pop(a) > push(2) > push(3) > pop(b) > pop(c) > pop(d)
-      array(1,    3,    2,     null),
-
-      // push(1) > pop(a) > push(2) > pop(b) > push(3) > pop(c) > pop(d)
-      array(1,    2,    3,     null),
-      
-      // push(1) > pop(a) > push(2) > pop(b) > pop(c) > push(3) > pop(d)
-      // push(1) > pop(a) > push(2) > push(3) > pop(d) > pop(b) > pop(c)
-      // push(1) > pop(a) > push(2) > pop(b) > push(3) > pop(d) > pop(c)
-      array(1,    2,     null,   3),
-
-      // push(1) > pop(a) > push(2) > push(3) > pop(b) > pop(d) > pop(c)
-      array(1,    3,     null,   2),
-
-      // push(1) > push(2) > pop(a) > push(3) > pop(b) > pop(c) > pop(d)
-      array(2,    3,     1,   null),
-
-      // push(1) > push(2) > pop(a) > pop(b) > push(3) > pop(c) > pop(d)
-      array(2,    1,     3,   null),
-
-      // push(1) > push(2) > pop(a) > push(3) > pop(b) > pop(d) > pop(c)
-      array(2,    3,     null,   1),
-
-      // push(1) > push(2) > pop(a) > push(3) > pop(d) > pop(b) > pop(c)
-      // push(1) > push(2) > pop(a) > pop(b) > push(3) > pop(d) > pop(c)
-      // push(1) > push(2) > pop(a) > pop(b) > pop(c) > push(3) > pop(d) 
-      array(2,    1,     null,   3),
-
-      // pop(a) > push(1) > push(2) > pop(b) > push(3) > pop(c) > pop(d)
-      array(null,    2,    3,     1),
-
-      // pop(a) > push(1) > push(2) > push(3) > pop(b) > pop(c) > pop(d)
-      array(null,    3,    2,     1),
-
-      //pop(a) > push(1) > push(2) > push(3) > pop(d) > pop(b) > pop(c)
-      //pop(a) > push(1) > push(2) > pop(b) > push(3) > pop(d) > pop(c)
-      //pop(a) > push(1) > push(2) > pop(b) > pop(c) > push(3) > pop(d)
-      array(null,    2,     1,   3),
-
-      //pop(a) > push(1) > push(2) > push(3) > pop(b) > pop(d) > pop(c)
-      array(null,    3,     1,   2)
+        // push(1)  > push(2) > pop(a) > push(3) > pop(b) > pop(c) > pop(d)
+        array(2,    3,     1,   null),
+        // push(1)  > push(2) > pop(a) > pop(b) > push(3) > pop(c) > pop(d)
+        array(2,    1,     3,   null),    
+        // push(1) > pop(a) > push(2) > push(3) > pop(b) > pop(c) > pop(d)
+        array(1,    3,    2,     null),
+        // push(1) > pop(a) > push(2) > pop(b) > push(3) > pop(c) > pop(d)
+        array(1,    2,    3,     null),    
+        // pop(a) > push(1)  > push(2) > pop(b) > push(3) > pop(c) > pop(d)
+        array(null, 2,    3,     1),    
+        // pop(a) > push(1) > push(2) > push(3) > pop(b) > pop(c) > pop(d)
+        array(null, 3,    2,     1)
     ); 
     assertEquals(0, s.size());      
   }
@@ -161,22 +132,50 @@ public abstract class StackTest {
         () -> { b.v = s.pop(); c.v = s.pop(); }
         );
     
-    assertOneOf (
-        array(a,    b,     c,   d ),
-        // push(1)  > push(2) > pop(a) > push(3) > pop(b) > pop(c) > pop(d)
-        array(2,    3,     1,   null),
-        // push(1)  > push(2) > pop(a) > pop(b) > push(3) > pop(c) > pop(d)
-        array(2,    1,     3,   null),    
-        // push(1) > pop(a) > push(2) > push(3) > pop(b) > pop(c) > pop(d)
-        array(1,    3,    2,     null),
-        // push(1) > pop(a) > push(2) > pop(b) > push(3) > pop(c) > pop(d)
-        array(1,    2,    3,     null),    
-        // pop(a) > push(1)  > push(2) > pop(b) > push(3) > pop(c) > pop(d)
-        array(null, 2,    3,     1),    
-        // pop(a) > push(1) > push(2) > push(3) > pop(b) > pop(c) > pop(d)
-        array(null, 3,    2,     1)
-        // TODO COMPLETE
-    ); 
+        assertOneOf (
+          array(a,    b,     c,   d ),
+          // push(1) > pop(a) > push(2) > push(3) > pop(b) > pop(c) > pop(d)
+          array(1,    3,    2,     null),
+    
+          // push(1) > pop(a) > push(2) > pop(b) > push(3) > pop(c) > pop(d)
+          array(1,    2,    3,     null),
+          
+          // push(1) > pop(a) > push(2) > pop(b) > pop(c) > push(3) > pop(d)
+          // push(1) > pop(a) > push(2) > push(3) > pop(d) > pop(b) > pop(c)
+          // push(1) > pop(a) > push(2) > pop(b) > push(3) > pop(d) > pop(c)
+          array(1,    2,     null,   3),
+    
+          // push(1) > pop(a) > push(2) > push(3) > pop(b) > pop(d) > pop(c)
+          array(1,    3,     null,   2),
+    
+          // push(1) > push(2) > pop(a) > push(3) > pop(b) > pop(c) > pop(d)
+          array(2,    3,     1,   null),
+    
+          // push(1) > push(2) > pop(a) > pop(b) > push(3) > pop(c) > pop(d)
+          array(2,    1,     3,   null),
+    
+          // push(1) > push(2) > pop(a) > push(3) > pop(b) > pop(d) > pop(c)
+          array(2,    3,     null,   1),
+    
+          // push(1) > push(2) > pop(a) > push(3) > pop(d) > pop(b) > pop(c)
+          // push(1) > push(2) > pop(a) > pop(b) > push(3) > pop(d) > pop(c)
+          // push(1) > push(2) > pop(a) > pop(b) > pop(c) > push(3) > pop(d) 
+          array(2,    1,     null,   3),
+    
+          // pop(a) > push(1) > push(2) > pop(b) > push(3) > pop(c) > pop(d)
+          array(null,    2,    3,     1),
+    
+          // pop(a) > push(1) > push(2) > push(3) > pop(b) > pop(c) > pop(d)
+          array(null,    3,    2,     1),
+    
+          //pop(a) > push(1) > push(2) > push(3) > pop(d) > pop(b) > pop(c)
+          //pop(a) > push(1) > push(2) > pop(b) > push(3) > pop(d) > pop(c)
+          //pop(a) > push(1) > push(2) > pop(b) > pop(c) > push(3) > pop(d)
+          array(null,    2,     1,   3),
+    
+          //pop(a) > push(1) > push(2) > push(3) > pop(b) > pop(d) > pop(c)
+          array(null,    3,     1,   2)
+        );
     assertEquals(0, s.size());      
   }
 
