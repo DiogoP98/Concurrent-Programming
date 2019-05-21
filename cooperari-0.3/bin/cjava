@@ -1,0 +1,40 @@
+#! /bin/bash
+
+
+### Validate arguments ###
+if [[ $# -eq 0  || $# -gt 2 ]] 
+then
+  cat << EOT
+Usage: 
+   cjava [root_dir] program_class
+EOT
+  exit 1
+fi
+
+if [ $# -eq 1 ]
+then
+  root_dir="."
+  program_class=$1
+else
+  root_dir=$1
+  program_class=$2
+fi
+
+if [ ! -d $root_dir ]
+then
+   echo cjava: $root_dir is not a directory!
+   exit 1
+fi
+
+### Setup global configuration ###
+source $(dirname $0)/cclasspath
+cdata_dir=$root_dir/cdata
+
+### Finally proceed with actual execution ### 
+CLASSPATH="$COOPERARI_CLASSPATH:$root_dir/classes"
+#echo $CLASSPATH
+#echo $ASPECTJ_AGENT_JAR
+
+java -classpath "$CLASSPATH" $program_class
+
+exit $?
