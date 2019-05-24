@@ -1,0 +1,33 @@
+2019-05-24 22:46:41 | test0: executed 1 trials in 120 ms [passed]
+2019-05-24 22:46:43 | test1: executed 50 trials in 1687 ms [passed]
+2019-05-24 22:46:45 | test2: executed 50 trials in 2081 ms [passed]
+2019-05-24 22:46:47 | test3: executed 50 trials in 2203 ms [passed]
+2019-05-24 22:46:50 | test4: executed 50 trials in 2579 ms [passed]
+2019-05-24 22:46:50 | test0: executed 1 trials in 30 ms [passed]
+2019-05-24 22:46:52 | test1: executed 50 trials in 2184 ms [passed]
+2019-05-24 22:46:55 | test2: executed 50 trials in 2563 ms [passed]
+2019-05-24 22:46:57 | test3: executed 50 trials in 2410 ms [passed]
+2019-05-24 22:47:00 | test4: executed 50 trials in 2872 ms [passed]
+2019-05-24 22:47:00 | test0: executed 1 trials in 88 ms [passed]
+2019-05-24 22:47:03 | test1: executed 50 trials in 3107 ms [passed]
+2019-05-24 22:47:08 | test2: executed 50 trials in 4328 ms [passed]
+2019-05-24 22:47:14 | test3: executed 50 trials in 5915 ms [passed]
+2019-05-24 22:47:19 | test4: executed 50 trials in 5675 ms [passed]
+2019-05-24 22:47:19 | test0: executed 1 trials in 23 ms [passed]
+2019-05-24 22:47:19 | Trace for trial 5 of test1 written to '/Users/Diogo/Desktop/pc_projecto/./cdata/pc.stack.AArrayStackV1.Test/test1.5.trace.log'.
+2019-05-24 22:47:19 | test1: executed 5 trials in 169 ms [failed : java.lang.AssertionError]
+2019-05-24 22:47:20 | Trace for trial 6 of test2 written to '/Users/Diogo/Desktop/pc_projecto/./cdata/pc.stack.AArrayStackV1.Test/test2.6.trace.log'.
+2019-05-24 22:47:20 | test2: executed 6 trials in 211 ms [failed : java.lang.AssertionError]
+2019-05-24 22:47:20 | Trace for trial 6 of test3 written to '/Users/Diogo/Desktop/pc_projecto/./cdata/pc.stack.AArrayStackV1.Test/test3.6.trace.log'.
+2019-05-24 22:47:20 | test3: executed 6 trials in 207 ms [failed : java.lang.AssertionError]
+2019-05-24 22:47:20 | Trace for trial 5 of test4 written to '/Users/Diogo/Desktop/pc_projecto/./cdata/pc.stack.AArrayStackV1.Test/test4.5.trace.log'.
+2019-05-24 22:47:20 | test4: executed 5 trials in 169 ms [failed : java.lang.ArrayIndexOutOfBoundsException]
+2019-05-24 22:47:20 | test0: executed 1 trials in 14 ms [passed]
+2019-05-24 22:47:20 | Trace for trial 3 of test1 written to '/Users/Diogo/Desktop/pc_projecto/./cdata/pc.stack.AArrayStackV2.Test/test1.3.trace.log'.
+2019-05-24 22:47:20 | test1: executed 3 trials in 102 ms [failed : java.lang.AssertionError]
+2019-05-24 22:47:21 | Trace for trial 28 of test2 written to '/Users/Diogo/Desktop/pc_projecto/./cdata/pc.stack.AArrayStackV2.Test/test2.28.trace.log'.
+2019-05-24 22:47:21 | test2: executed 28 trials in 1192 ms [failed : java.lang.AssertionError]
+2019-05-24 22:47:21 | Trace for trial 2 of test3 written to '/Users/Diogo/Desktop/pc_projecto/./cdata/pc.stack.AArrayStackV2.Test/test3.2.trace.log'.
+2019-05-24 22:47:21 | test3: executed 2 trials in 107 ms [failed : java.lang.AssertionError]
+2019-05-24 22:47:22 | Trace for trial 10 of test4 written to '/Users/Diogo/Desktop/pc_projecto/./cdata/pc.stack.AArrayStackV2.Test/test4.10.trace.log'.
+2019-05-24 22:47:22 | test4: executed 10 trials in 448 ms [failed : java.lang.AssertionError]
