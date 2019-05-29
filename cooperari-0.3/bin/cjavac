@@ -13,6 +13,10 @@ fi
 ### Setup global configuration ###
 source $(dirname $0)/cclasspath
 
+if [ ! -d "$root_dir/classes" ]
+then
+    mkdir "$root_dir/classes"
+fi
 
 CLASSPATH="$COOPERARI_CLASSPATH:$root_dir/classes"
 # echo $CLASSPATH
