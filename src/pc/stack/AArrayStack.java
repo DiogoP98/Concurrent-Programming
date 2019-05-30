@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 /**
  * Lock-free, array-based stack with optional exponential back-off
  * scheme.
- * 
+ *
  * @param <E> Type of elements in the stack.
  */
 public class AArrayStack<E> implements Stack<E> {
@@ -14,12 +14,13 @@ public class AArrayStack<E> implements Stack<E> {
   private final int INITIAL_CAPACITY = 16;
   private E[] array;
   private final Backoff backoff;
+  AtomicMarkableReference<Integer> mark;
 
   /**
    * Constructor with no arguments, disabling back-off by default.
    */
   public AArrayStack() {
-    this(false);
+    this(true);
   }
 
   /**
@@ -30,12 +31,12 @@ public class AArrayStack<E> implements Stack<E> {
   public AArrayStack(boolean enableBackoff) {
     array = (E[]) new Object[INITIAL_CAPACITY];
     backoff = enableBackoff ? new Backoff() : null;
-    // TODO ... what to use ?
+    mark = new AtomicMarkableReference<>(0,false);
   }
 
   @Override
   public int size() {
-    return 0; // TODO
+    return mark.getReference();
   }
 
   @Override
@@ -43,15 +44,43 @@ public class AArrayStack<E> implements Stack<E> {
     if (elem == null) {
       throw new IllegalArgumentException();
     }
-
-    // TODO ...
+    while(true) {
+      if (mark.compareAndSet(mark.getReference(),mark.getReference(),false,true)) {
+        if (mark.getReference() == array.length) {
+          array = Arrays.copyOf(array, 2 * array.length);
+        }
+        array[mark.getReference()] = elem;
+        mark.set(mark.getReference()+1,false);
+        if (backoff != null)
+          backoff.diminish();
+        break;
+      } else {
+          if (backoff != null)
+            backoff.delay();
+      }
+    }
   }
 
   @Override
   public E pop() {
     E elem = null;
-    // TODO ...
-
+    while(true) {
+      if (mark.compareAndSet(mark.getReference(),mark.getReference(),false,true)) {
+        if (mark.getReference() == 0){
+          mark.set(mark.getReference(),false);
+          break;
+        }
+        elem = array[mark.getReference() - 1];
+        array[mark.getReference() - 1] = null;
+        mark.set(mark.getReference()-1,false);
+        if (backoff != null)
+          backoff.diminish();
+        break;
+      } else {
+          if (backoff != null)
+            backoff.delay();
+      }
+    }
     return elem;
   }
 
@@ -63,4 +92,4 @@ public class AArrayStack<E> implements Stack<E> {
       return new AArrayStack<>();
     }
   }
-} 
+}
