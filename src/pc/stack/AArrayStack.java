@@ -20,7 +20,7 @@ public class AArrayStack<E> implements Stack<E> {
    * Constructor with no arguments, disabling back-off by default.
    */
   public AArrayStack() {
-    this(true);
+    this(false);
   }
 
   /**

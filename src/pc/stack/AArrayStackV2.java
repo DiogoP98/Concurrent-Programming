@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Array-based stack - buggy implementation 1.
- * 
+ *
  * @param <E> Type of elements in the stack.
  */
 public class AArrayStackV2<E> implements Stack<E> {
@@ -47,7 +47,7 @@ public class AArrayStackV2<E> implements Stack<E> {
       array[n] = elem;
       /* Para determinar se o novo elemento foi inserido correctamente,
        * verificamos se o tamanho da stack foi incrementado por 1. Isto
-       * pode acontecer mesmo que o elemento seja removido e um outro 
+       * pode acontecer mesmo que o elemento seja removido e um outro
        * inserido no seu lugar por outra thread, entre a sua insercao e
        * o momento que o compareAndSet() e efectuado.
        * Tal como no caso do AArrayStackV1.java, este problema pode ser
@@ -60,10 +60,10 @@ public class AArrayStackV2<E> implements Stack<E> {
         if (backoff != null) {
           backoff.diminish();
         }
-        break; 
+        break;
       }
       if (backoff != null) {
-        backoff.delay(); 
+        backoff.delay();
       }
     }
   }
@@ -101,4 +101,4 @@ public class AArrayStackV2<E> implements Stack<E> {
       return new AArrayStackV2<>();
     }
   }
-} 
+}
