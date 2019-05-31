@@ -25,16 +25,16 @@ public class StackBenchmark {
       runBenchmark(n, new LArrayStack<Integer>());
       runBenchmark(n, new ALinkedStack<Integer>(false));
       runBenchmark(n, new ALinkedStack<Integer>(true));
-//      runBenchmark(n, new ALinkedStackASR<Integer>(false));
-//      runBenchmark(n, new ALinkedStackASR<Integer>(true));
-//      runBenchmark(n, new AArrayStack<Integer>(false));
-//      runBenchmark(n, new AArrayStack<Integer>(true));
+      runBenchmark(n, new ALinkedStackASR<Integer>(false));
+      runBenchmark(n, new ALinkedStackASR<Integer>(true));
+      runBenchmark(n, new AArrayStack<Integer>(false));
+      runBenchmark(n, new AArrayStack<Integer>(true));
     }
   }
 
   private static void runBenchmark(int threads, Stack<Integer> s) {
-    for (int i = 0; i < INITIAL_ELEMENTS_IN_STACK; i++) { 
-      s.push(i); 
+    for (int i = 0; i < INITIAL_ELEMENTS_IN_STACK; i++) {
+      s.push(i);
     }
     Benchmark b = new Benchmark(threads, DURATION, new StackOperation(s));
     System.out.printf("%d threads using %s ... ", threads, s.getClass().getSimpleName());
@@ -61,5 +61,3 @@ public class StackBenchmark {
     }
   }
 }
-
-
