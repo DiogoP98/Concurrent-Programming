@@ -8,23 +8,25 @@ import java.util.concurrent.locks.ReentrantLock;
  * Hash set implementation.
  *
  */
-public class LHashSet<E> implements Set<E>{
+public class LHashSet2<E> implements Set<E>{
 
   private static final int NUMBER_OF_BUCKETS = 16; // should not be changed
 
   private LinkedList<E>[] table;
   private int size;
-  private final ReentrantLock rl;
+  private final ReentrantLock[] rl;
 
   /**
    * Constructor.
    * @param fair Fairness flag.
    */
   @SuppressWarnings("unchecked")
-  public LHashSet(boolean fair) {
+  public LHashSet2(boolean fair) {
     table = (LinkedList<E>[]) new LinkedList[NUMBER_OF_BUCKETS];
     size = 0;
-    rl = new ReentrantLock(fair);
+    rl = new ReentrantLock[NUMBER_OF_BUCKETS];
+    for(int i = 0; i < NUMBER_OF_BUCKETS; i++)
+      rl[i] = new ReentrantLock(fair);
   }
 
   @Override
@@ -39,7 +41,7 @@ public class LHashSet<E> implements Set<E>{
     if (list == null) {
       table[pos] = list = new LinkedList<>();
     }
-
+    
     return list;
   }
 
@@ -49,11 +51,12 @@ public class LHashSet<E> implements Set<E>{
       throw new IllegalArgumentException();
     }
 
-    LinkedList<E> list = getEntry(elem);
+    int pos = Math.abs(elem.hashCode() % table.length);
     boolean r;
     
-    rl.lock();
+    rl[pos].lock();
     try{
+      LinkedList<E> list = getEntry(elem);
       r = ! list.contains(elem);
 
       if (r) {
@@ -61,7 +64,7 @@ public class LHashSet<E> implements Set<E>{
         size++;
       }
     } finally {
-      rl.unlock();
+      rl[pos].unlock();
     }
     
     return r;
@@ -73,9 +76,10 @@ public class LHashSet<E> implements Set<E>{
       throw new IllegalArgumentException();
     }
 
+    int pos = Math.abs(elem.hashCode() % table.length);
     boolean r;
     
-    rl.lock();
+    rl[pos].lock();
     try{
       r = getEntry(elem).remove(elem);
 
@@ -83,7 +87,7 @@ public class LHashSet<E> implements Set<E>{
         size--;
       }
     } finally {
-      rl.unlock();
+      rl[pos].unlock();
     }
 
     return r;
@@ -95,13 +99,14 @@ public class LHashSet<E> implements Set<E>{
       throw new IllegalArgumentException();
     }
 
+    int pos = Math.abs(elem.hashCode() % table.length);
     boolean r;
     
-    rl.lock();
-    try {
-      r = getEntry(elem).contains(elem);
+    rl[pos].lock();
+    try { 
+      r = getEntry(elem).contains(elem);;
     } finally {
-      rl.unlock();
+      rl[pos].unlock();
     }
 
     return r;
