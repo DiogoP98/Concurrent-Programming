@@ -4,17 +4,17 @@ import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 
+ *
  * Hash set implementation.
  *
  */
 public class LHashSet<E> implements Set<E>{
 
-  private static final int NUMBER_OF_BUCKETS = 16; // should not be changed 
+  private static final int NUMBER_OF_BUCKETS = 16; // should not be changed
 
   private LinkedList<E>[] table;
   private int size;
-  private final ReentrantLock rl; // TODO this is not being used
+  private final ReentrantLock rl;
 
   /**
    * Constructor.
@@ -35,11 +35,11 @@ public class LHashSet<E> implements Set<E>{
   private LinkedList<E> getEntry(E elem) {
     int pos = Math.abs(elem.hashCode() % table.length);
     LinkedList<E> list = table[pos];
-    
+
     if (list == null) {
       table[pos] = list = new LinkedList<>();
     }
-    
+
     return list;
   }
 
@@ -48,14 +48,20 @@ public class LHashSet<E> implements Set<E>{
     if (elem == null) {
       throw new IllegalArgumentException();
     }
-    
-    // TODO use lock
-    LinkedList<E> list = getEntry(elem);
-    boolean r = ! list.contains(elem);
 
-    if (r) {
-      list.addFirst(elem);
-      size++;
+    LinkedList<E> list = getEntry(elem);
+    boolean r;
+    
+    rl.lock();
+    try{
+      r = ! list.contains(elem);
+
+      if (r) {
+        list.addFirst(elem);
+        size++;
+      }
+    } finally {
+      rl.unlock();
     }
     
     return r;
@@ -66,13 +72,20 @@ public class LHashSet<E> implements Set<E>{
     if (elem == null) {
       throw new IllegalArgumentException();
     }
-    // TODO use lock
-    boolean r = getEntry(elem).remove(elem);
+
+    boolean r;
     
-    if (r) {
-      size--;
+    rl.lock();
+    try{
+      r = getEntry(elem).remove(elem);
+
+      if (r) {
+        size--;
+      }
+    } finally {
+      rl.unlock();
     }
-    
+
     return r;
   }
 
@@ -81,7 +94,16 @@ public class LHashSet<E> implements Set<E>{
     if (elem == null) {
       throw new IllegalArgumentException();
     }
-    // TODO use lock
-    return getEntry(elem).contains(elem);
+
+    boolean r;
+    
+    rl.lock();
+    try {
+      r = getEntry(elem).contains(elem);
+    } finally {
+      rl.unlock();
+    }
+
+    return r;
   }
 }
