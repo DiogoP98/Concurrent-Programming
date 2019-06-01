@@ -11,12 +11,14 @@ public class SetTest {
     new SetTest(args);
   }
 
+  private static final int NUMBER_OF_SETS = 6;
   private final CyclicBarrier barrier;
   private final int n, N, OPS;
-  private final Set<Integer> set;
+  private final Set<Integer>[] sets;
   private final Object PRINT_LOCK = new Object();
   private final AtomicInteger errors = new AtomicInteger();
 
+  @SuppressWarnings("unchecked")
   private SetTest(String[] args) throws Exception {
     // Number of threads
     n = args.length == 0 ? 128 : Integer.parseInt(args[0]);
@@ -24,24 +26,34 @@ public class SetTest {
     N = 16;
     // Number of operations per thread
     OPS = 1000;
-    // Define the set
-    set = new LHashSet3<>(false);
-    barrier = new CyclicBarrier(n + 1);
-    for (int i = 0; i < n; i++) {
-      final int id = i;
-      new Thread(() -> run(id)).start();
-    }
-    barrier.await(); // sync on start
-    barrier.await(); // sync before verification
-    barrier.await(); // sync at the end
-    if (errors.get() == 0) {
-      System.out.println("all seems ok :)");
-    } else {
-      System.out.println("There were errors :(");
-    }
+    // Define the sets
+    sets = (Set<Integer>[]) new Set[NUMBER_OF_SETS];
+    sets[0] = new LHashSet<>(false);
+    sets[1] = new LHashSet<>(true);
+    sets[2] = new LHashSet2<>(false);
+    sets[3] = new LHashSet2<>(true);
+    sets[4] = new LHashSet3<>(false);
+    sets[5] = new LHashSet3<>(true);
 
+    barrier = new CyclicBarrier(n + 1);
+    for (Set<Integer> s : sets) {
+      System.out.println("Testing set: " + s.getClass().getSimpleName());
+      for (int i = 0; i < n; i++) {
+        final int id = i;
+        new Thread(() -> run(id, s)).start();
+      }
+      barrier.await(); // sync on start
+      barrier.await(); // sync before verification
+      barrier.await(); // sync at the end
+      if (errors.get() == 0) {
+        System.out.println("all seems ok :)");
+      } else {
+        System.out.println("There were errors :(");
+      }
+      barrier.reset();
+    }
   }
-  private void run(int id) {
+  private void run(int id, Set<Integer> set) {
     try {
       barrier.await();
       java.util.Set<Integer> mySet = new java.util.TreeSet<>();
