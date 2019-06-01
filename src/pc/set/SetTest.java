@@ -25,7 +25,7 @@ public class SetTest {
     // Number of operations per thread
     OPS = 1000;
     // Define the set
-    set = new LHashSet2<>(false);
+    set = new LHashSet3<>(false);
     barrier = new CyclicBarrier(n + 1);
     for (int i = 0; i < n; i++) {
       final int id = i;
