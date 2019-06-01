@@ -11,7 +11,7 @@ public class SetBenchmark {
 
   private static final int DURATION = 10;
   private static final int MAX_THREADS = 32;
-  private static final int N = 256;
+  private static final int N = 4096; //256;
 
   /**
    * Program to run a benchmark over set implementations.
@@ -23,6 +23,10 @@ public class SetBenchmark {
     for (int n = 1; n <= MAX_THREADS; n = n * 2) {
       runBenchmark(n, new LHashSet<Integer>(false));
       runBenchmark(n, new LHashSet<Integer>(true));
+      runBenchmark(n, new LHashSet2<Integer>(false));
+      runBenchmark(n, new LHashSet2<Integer>(true));
+      runBenchmark(n, new LHashSet3<Integer>(false));
+      runBenchmark(n, new LHashSet3<Integer>(true));
     }
   }
 

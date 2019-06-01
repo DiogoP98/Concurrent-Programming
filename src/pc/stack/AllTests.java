@@ -8,10 +8,10 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuppressWarnings("javadoc")
 @RunWith(Suite.class)
 @SuiteClasses({
-//  LLinkedStack.Test.class,
-//  LArrayStack.Test.class,
-//  ALinkedStack.Test.class,
-//  ALinkedStackASR.Test.class,
+  LLinkedStack.Test.class,
+  LArrayStack.Test.class,
+  ALinkedStack.Test.class,
+  ALinkedStackASR.Test.class,
 //  AArrayStackV1.Test.class,
 //  AArrayStackV2.Test.class,
   AArrayStack.Test.class,
