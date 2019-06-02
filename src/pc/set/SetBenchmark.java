@@ -50,7 +50,8 @@ public class SetBenchmark {
 
     @Override
     public void run() {
-      int op = rng.nextInt(10);
+      // int op = rng.nextInt(10); // round 1: 10,10,80
+      int op = rng.nextInt(5); // round 2: 20,20,60
       int v = rng.nextInt(N);
       switch (op) {
         case 0:
