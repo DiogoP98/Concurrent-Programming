@@ -46,15 +46,15 @@ public class AArrayStackV2<E> implements Stack<E> {
       int n = top.get();
       array[n] = elem;
       /* Para determinar se o novo elemento foi inserido correctamente,
-       * verificamos se o tamanho da stack foi incrementado por 1. Isto
-       * pode acontecer mesmo que o elemento seja removido e um outro
-       * inserido no seu lugar por outra thread, entre a sua insercao e
-       * o momento que o compareAndSet() e efectuado.
+       * verificamos se o tamanho da stack nao foi alterado entretanto.
+       * Se isto tiver acontecido, entao nao atualizamos o valor de top.
+       * O problema surge com o facto de o array ja ter sido alterado, ou seja,
+       * apesar de nao atualizarmos top, as alteracoes a stack ja foram feitas.
        * Tal como no caso do AArrayStackV1.java, este problema pode ser
        * evitado se utilizarmos um estado para representar o topo da stack.
-       * Deste modo, podemos nao so verificar se o tamanho da stack foi
-       * incrementado corretamente, mas tambem se o elemento no topo da stack
-       * e o elemento que foi iserido - ver aula 3.
+       * Deste modo, atualizamos top e o array em simultaneo.
+       * Se nao atualizarmos top, entao tambem nao modificamos o array.
+       * A atulizacao de top e do array devem ser feitas atomicamente.
        */
       if (top.compareAndSet(n, n+1)) {
         if (backoff != null) {
